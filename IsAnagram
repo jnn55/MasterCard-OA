@@ -1,1 +1,46 @@
+Solution 1:
 
+def isAnagram(self, s: str, t: str) -> bool:
+
+    if len(s)!=len(t): return False #if s and t have different lengths, they are definitely not anagrams
+
+
+    return sorted(s) == sorted(t)
+
+Discussion:
+  This solution takes advantage of the python sorted() function, which sorts the string's letters alphabetically, returned as a list of letters. 
+  Once the strings are sorted, we just return whether they are equal or not, since anagram strings will match each other letter by letter once sorted. 
+  For example, the sorted method when applied to string s=“anagram” returns ['a', 'a', 'a', 'g', 'm', 'n', 'r'], which is the same for string t=“nagaram”.
+  
+  This method has the advantage of ease of implementation and not needing additional memory as we are sorting the strings t and s in place.  
+  Since the sorted method uses the Python Timsort algorithm, the function will have time complexity of O(NlogN), with N being the length of both strings 
+  (s+t) and space complexity of O(1) since we are not storing any data (assuming that the soring function does not use extra memory)
+  
+  
+  
+Solution 2: 
+
+def isAnagram(self, s: str, t: str) -> bool:
+    
+    if len(s)!=len(t): return False #if s and t have different lengths, they are definitely not anagrams
+    
+    sCount, tCount= {},{}
+    
+    for i in range(len(s)):   #since s and t are the same length, we can iterate through the letters once
+      sCount[s[i]]=sCount.get(s[i],0)+1
+      tCount[t[i]]=tCount.get(t[i],0)+1
+    return sCount==tCount
+    
+    
+Discussion: 
+  This solution takes a different approach than the first solution by explicitly counting the occurrence of each letter in both strings and then comparing
+  the resulting hashmap. After initializing two dictionaries, we can iterate through the strings and increment the value of the key corresponding to 
+  the letter (which will be initialized as 0). Once we have iterated through the strings, we check the dictionaries and return true if they are equal.
+  
+  This method has the advantage of not having to do any expensive sorting operation on the strings. We run through each string once and store its letter
+  count in a dictionary, so the time complexity would be O(N), where N is the combined length of the strings (s+t). However, since we have to store two
+  dictionaries we are using some memory space, with space complexity of O(N) and N being the length of the strings (s+t). Essentially, we are trading 
+  faster performance for extra memory use by using this algorithm. 
+  
+  To check the equivalence of two strings, we have to iterate through each one at least one time. Therefore, a time complexity of O(N) is the most 
+  efficient solution for this problem.
